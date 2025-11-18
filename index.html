@@ -1,0 +1,3311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Captcha Solver | Azapi Clone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap');
+
+    /* -------------------------
+   THEME COLORS
+------------------------- */
+    :root {
+      --primary: #FB9E32;
+      --accent: #FBC86D;
+      --secondary: #D26059;
+      --dark: #3A151C;
+      --mid: #81414B;
+      --bg-gradient: linear-gradient(135deg, #FBC86D 0%, #FB9E32 40%, #D26059 100%);
+    }
+
+    /* Reset / layout */
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+  
+      color: #111;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      background: rgba(250, 200, 140, 0.10);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(7px);
+      border-radius: 0 0 18px 18px;
+      z-index: 1000;
+    }
+
+    
+    nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+    nav img {
+      display: block;
+      height: 42px;
+      width: auto;
+        filter: none;   
+      
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+      font-weight: 500;
+      color: #030303;
+      cursor: pointer;
+      padding: 6px 10px;
+      transition: 0.25s ease;
+      border-radius: 10px;
+    }
+
+    /* hover */
+    nav ul li:hover {
+      color: var(--dark) !important;
+      background: rgba(221, 219, 219, 0.151);
+      transform: translateY(-3px);
+    }
+
+    /* underline */
+    nav ul li::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: var(--dark);
+      transition: 0.28s ease;
+    }
+
+    nav ul li:hover::after {
+      width: 100%;
+    }
+
+    /* spark emoji animation */
+    .spark {
+      display: inline-block;
+      transform-origin: center;
+      animation: spark 900ms infinite;
+    }
+
+    @keyframes spark {
+      0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.7;
+      }
+
+      40% {
+        transform: scale(1.4) rotate(20deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.7;
+      }
+    }
+
+    /* DROPDOWN */
+    .dropdown {
+      position: absolute;
+      top: 46px;
+      left: 0;
+      width: 230px;
+      padding: 12px;
+      border-radius: 16px;
+      background: #301301b2;
+      backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px) scale(0.98);
+      transform-origin: top left;
+      transition: 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    nav ul li:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(10px) scale(1);
+    }
+
+    .dropdown a {
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      transition: 0.28s ease, transform 0.25s ease, background 0.28s ease;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--primary);
+      transform: translateX(6px);
+    }
+
+    /* BUTTON BASE */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Glow (Login & Register) */
+    .btn-glow {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(251, 158, 50, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-glow::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+
+    .btn-glow:hover {
+      transform: scale(1.04);
+      box-shadow: 0 14px 42px rgba(251, 158, 50, 0.28);
+    }
+
+    .btn-glow:active {
+      transform: scale(.99);
+    }
+
+    /* ===== NEW: Border Sweep (Get Started) - GLASSY + BLACK BORDER =====
+   - glassy (semi-transparent)
+   - solid black border for readability
+   - a diagonal "sweep" shine travels across on hover (and also a subtle looping pulse)
+*/
+    .btn-border {
+      position: relative;
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      /* glassy transparent */
+      color: var(--dark);
+      border: 1.6px solid rgba(0, 0, 0, 0.85);
+      /* black border as requested */
+      font-weight: 700;
+      overflow: hidden;
+      z-index: 0;
+      transition: transform .22s ease, box-shadow .22s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    /* subtle base glow (keeps it lively) */
+    .btn-border:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    /* moving diagonal sweep (thin band) */
+    .btn-border::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -40%;
+      width: 60%;
+      height: 180%;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 45%, rgba(255, 255, 255, 0.08) 60%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(18deg) translateX(-120%);
+      transition: transform .6s cubic-bezier(.2, .9, .3, 1);
+      pointer-events: none;
+      filter: blur(6px);
+      opacity: 0.95;
+    }
+
+    /* On hover the sweep moves across */
+    .btn-border:hover::after {
+      transform: rotate(18deg) translateX(220%);
+    }
+
+    /* animated subtle border highlight that loops (small ring) */
+    .btn-border::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      padding: 1.2px;
+      /* keep small so it looks like a border highlight */
+      background: linear-gradient(90deg, rgba(5, 5, 5, 0.856), rgba(10, 10, 10, 0.664));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.9;
+      pointer-events: none;
+      transition: opacity .4s;
+    }
+
+    /* small looping scale pulse for CTA to attract eye (subtle) */
+    @keyframes ctaPulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.01);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .btn-border {
+      animation: ctaPulse 4.5s ease-in-out infinite;
+    }
+
+    /* NAV ACTIONS */
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* HERO */
+    .hero {
+ background: var(--bg-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 72px 6vw;
+      gap: 28px;
+      min-height: 78vh;
+   
+      
+    }
+
+
+
+    .hero-text {
+      max-width: 640px;
+      color: #fff
+    }
+
+    .hero-title {
+      font-family: "Momo Trust Display", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 48px;
+      color: var(--dark);
+      margin: 0 0 10px;
+    }
+
+    /* subtitle: color will change via JS */
+    .subtitle {
+      font-size: 24px;
+      font-weight: 600;
+      transition: color 0.6s ease;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.692);
+    }
+
+    /* hero image card */
+    .hero-card {
+      width: 520px;
+      max-width: 46vw;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 22px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+    }
+
+    .hero-img {
+      width: 100%;
+      border-radius: 14px;
+      transition: transform 0.1s ease-out;
+    }
+
+    /* responsive */
+    @media(max-width:900px) {
+      nav ul {
+        display: none
+      }
+
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 40px 6vw
+      }
+
+      .hero-card {
+        width: 92%
+      }
+    }
+
+
+
+
+    /* Smooth homepage gradient animation */
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+
+    /* LIGHT THEME SECTION */
+    .why-section {
+      padding: 90px 0;
+
+    }
+
+
+    /* Titles & Text */
+
+
+
+
+
+
+    :root {
+      --primary: #FB9E32;
+      --accent: #FBC86D;
+      --secondary: #D26059;
+      --dark: #3A151C;
+      --mid: #81414B;
+    }
+
+    /* MAIN SECTION (Everything inside here) */
+    .main-section {
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #FFF8EF, #FFFDF9);
+      position: relative;
+      overflow: hidden;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Blobs INSIDE SECTION */
+    .blob,
+    .blob2 {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, var(--accent), var(--primary));
+      filter: blur(90px);
+      opacity: 0.45;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .blob {
+      top: -80px;
+      left: -80px;
+    }
+
+    .blob2 {
+      bottom: -100px;
+      right: -80px;
+      background: radial-gradient(circle, var(--secondary), var(--mid));
+    }
+
+    /* Blob Animation */
+    @keyframes blobMove {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(40px, 60px);
+      }
+    }
+
+    @keyframes blobMove2 {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(-40px, -60px);
+      }
+    }
+
+    .blob {
+      animation: blobMove 12s infinite alternate ease-in-out;
+    }
+
+    .blob2 {
+      animation: blobMove2 14s infinite alternate ease-in-out;
+    }
+
+    /* WHY SECTION */
+    .why-section {
+      padding: 60px 8%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .title123 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+
+    .subtitle123 {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 1100px;
+      margin: auto;
+      color: #444;
+    }
+
+    /* Glass Card */
+    .extension-section {
+      width: 85%;
+      margin: 40px auto;
+      padding: 25px 30px;
+      position: relative;
+      z-index: 10;
+
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(14px);
+
+      box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.10),
+        inset 0 1px 10px rgba(255, 255, 255, 0.35);
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+
+      transition: 0.3s ease;
+    }
+
+    .extension-section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.14);
+    }
+
+    .ext-left {
+      width: 55%;
+    }
+
+    .ext-title {
+      font-size: 25px;
+      font-weight: 600;
+    }
+
+    .ext-text {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 12px 0 18px;
+      color: #555;
+    }
+
+    /* Button */
+    .ext-btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 5px 12px rgba(251, 158, 50, 0.35);
+    }
+
+    .ext-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Image */
+    .ext-right img {
+      width: 300px;
+      max-width: 100%;
+      border-radius: 0;
+      box-shadow: none;
+      animation: float 3.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Fade effect */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width: 900px) {
+      .extension-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .ext-left,
+      .ext-right {
+        width: 100%;
+      }
+    }
+
+    /* navbar dark mode on scroll */
+    .nav-dark {
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-dark-item {
+      color: #000 !important;
+    }
+
+    .nav-dark-item:hover {
+      color: var(--primary) !important;
+    }
+
+
+
+    /* OCR PAGE  */
+
+
+
+    :root {
+
+      --card-bg: #ffffff;
+    }
+
+    /* NO BODY CSS AS REQUESTED */
+
+    .section-wrapper {
+      background: #fdfbfb;
+      /* 99% white + micro tint */
+
+      max-width: 1600px;
+      margin: auto;
+      padding: 60px 20px;
+      text-align: center;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .section-wrapper h2 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .section-wrapper p {
+      color: #444;
+      margin-top: 2px;
+    }
+
+    .tabs {
+      margin: 20px 0 40px;
+    }
+
+    .tab-btn {
+      background: #eee;
+      border: none;
+      padding: 10px 25px;
+      margin: 0 5px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 1100;
+      transition: 0.3s;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .slider-container {
+      position: relative;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      padding-bottom: 40px;
+      cursor: grab;
+      scroll-snap-type: none;
+    }
+
+    .slider-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 15px;
+      width: 32.1%;
+      flex-shrink: 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+
+    }
+
+    @media(max-width:900px) {
+      .slider-container {
+        scroll-snap-type: x mandatory;
+      }
+
+      .card {
+        width: 90%;
+        scroll-snap-align: center;
+      }
+    }
+
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin: 10px 0 6px;
+      color: var(--dark);
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .card button {
+      margin-top: 10px;
+      padding: 5px 12px;
+      font-size: 12px;
+
+      background: transparent;
+      color: #000;
+      border: 1px solid #000;
+
+      border-radius: 36px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .card button:hover {
+      background: #000;
+      color: #fff;
+    }
+
+
+    .swipe-hint {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+
+
+    /* ENS OCR PAGE  */
+
+
+
+    /* Progress Loader Track */
+    .progress-bar {
+      width: 140px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 20px;
+      margin: 20px auto 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Actual Moving Bar */
+    .progress-fill {
+      width: 40px;
+      height: 4px;
+      background: var(--dark);
+      border-radius: 20px;
+      position: absolute;
+      left: 0;
+    }
+
+
+
+    /* SECTION HEIGHT FIXED */
+    .why-us {
+      padding: 40px 20px;
+      height: 420px;
+      /* <<< FIXED HEIGHT */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      background: #fff;
+    }
+
+    .why-us h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .why-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* CARD STYLING + ANIMATION */
+    .why-card {
+      padding: 22px;
+      background: #fff5eb3d;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      transform: scale(1);
+    }
+
+    .why-card:hover {
+      transform: scale(1.08);
+      border-color: var(--primary);
+      box-shadow: 0 12px 26px rgba(251, 158, 50, 0.25);
+    }
+
+    /* ICON STYLE */
+    .icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+      color: var(--primary);
+      transition: transform 0.35s ease, color 0.35s ease;
+    }
+
+    .why-card:hover .icon {
+      transform: scale(1.2) rotate(5deg);
+      color: var(--dark);
+    }
+
+    .why-card h3 {
+      font-size: 18px;
+
+      color: var(--dark);
+
+    }
+
+    .why-card p {
+      margin-top: -10px;
+      font-size: 14px;
+
+      color: #555;
+    }
+
+    .why-us p {
+      margin-top: -11px;
+    }
+
+
+    /* MOBILE FIX */
+    @media (max-width: 768px) {
+      .why-us {
+        height: auto;
+        /* Allow expandable height on mobile */
+        padding-bottom: 60px;
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+
+
+    /* What azapt  */
+
+    /* ----------------------------------------- */
+    /* COLOR THEME — SCOPED ONLY TO THIS SECTION */
+    /* ----------------------------------------- */
+    .ank-section {
+
+      --ank-primary: #FB9E32;
+      --ank-accent: #FBC86D;
+      --ank-secondary: #D26059;
+      --ank-dark: #3A151C;
+      --ank-mid: #81414B;
+      --ank-surface: #ffffff;
+
+      font-family: "Poppins", sans-serif;
+      margin-top: 50px;
+    }
+
+
+    .ank-section h2,
+    .ank-section h3 {
+      margin-top: 0 !important;
+    }
+
+    /* ----------------------------------------- */
+    /* SECTION WRAPPER */
+    /* ----------------------------------------- */
+    .ank-wrap {
+      max-width: fit-content;
+      padding: 40px 50px 60px 50px;
+
+
+      background: linear-gradient(135deg,
+          rgba(251, 157, 50, 0.075),
+          rgba(252, 200, 109, 0.11),
+          rgba(210, 95, 89, 0.055));
+      border-radius: 5px;
+
+
+
+      text-align: center;
+      color: var(--ank-dark);
+    }
+
+    /* TITLE */
+    .ank-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 6px;
+
+
+    }
+
+    .ank-sub {
+      font-size: 15px;
+      color: var(--ank-mid);
+      margin-top: -10px;
+      margin-bottom: 36px;
+    }
+
+    /* ----------------------------------------- */
+    /* GRID */
+    /* ----------------------------------------- */
+    .ank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    /* ----------------------------------------- */
+    /* MATERIAL CARD */
+    /* ----------------------------------------- */
+    .ank-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.897);
+      backdrop-filter: blur(14px) saturate(170%);
+      -webkit-backdrop-filter: blur(14px) saturate(170%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 18px;
+
+      padding: 35px 26px 28px;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 15px 28px rgba(0, 0, 0, 0.12);
+
+      transition: 0.35s ease;
+
+      opacity: 0;
+      transform: translateY(35px);
+    }
+
+    .ank-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ank-card:hover {
+      transform: translateY(-10px);
+      box-shadow:
+        0 6px 15px rgba(0, 0, 0, 0.12),
+        0 22px 38px rgba(0, 0, 0, 0.18);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    /* ----------------------------------------- */
+    /* ICON FLOAT */
+    /* ----------------------------------------- */
+    .ank-icon {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .ank-icon img {
+      width: 120px;
+      height: 120px;
+      filter: drop-shadow(0px 5px 10px rgba(251, 158, 50, 0.35));
+      animation: ankFloat 3.2s ease-in-out infinite;
+    }
+
+    @keyframes ankFloat {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* TEXT */
+    .ank-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ank-dark);
+    }
+
+    .ank-card p {
+      margin: 0;
+      color: var(--ank-mid);
+      font-size: 15px;
+      line-height: 1.52;
+    }
+
+    /* ----------------------------------------- */
+    /* RIPPLE */
+    /* ----------------------------------------- */
+    .ank-ripple {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(251, 158, 50, 0.25);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ank-ripple-effect 0.55s linear;
+    }
+
+    @keyframes ank-ripple-effect {
+      to {
+        transform: scale(15);
+        opacity: 0;
+      }
+    }
+
+    /* ----------------------------------------- */
+    /* RESPONSIVE */
+    /* ----------------------------------------- */
+    @media (max-width: 900px) {
+      .ank-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .ank-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+
+    /* /overview section  */
+
+
+    /* ---------------------------- */
+    /* SCOPED VARIABLES */
+    /* ---------------------------- */
+    .azapi-ocr-section {
+      --primary: #FB9E32;
+      --accent: #FBC86D;
+      --secondary: #D26059;
+      --dark: #3A151C;
+      --mid: #81414B;
+      --glass-bg: rgba(255, 255, 255, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.3);
+
+    }
+
+    .azapi-ocr-section * {
+      font-family: "Poppins", sans-serif;
+      box-sizing: border-box;
+      overflow: hidden;
+
+    }
+
+    .azapi-ocr-section {
+      padding: 10px 20px;
+      max-width: 1150px;
+      height: 0vh;
+      margin: auto;
+      text-align: center;
+
+      /* NEW FIX */
+      overflow: hidden !important;
+      padding-left: 120px;
+      /* make room for arrow */
+      padding-right: 120px;
+      /* make room for arrow */
+      margin-left: -120px;
+      /* cancel padding so layout stays same */
+      margin-right: -120px;
+      /* cancel padding so layout stays same */
+    }
+
+
+
+
+    /* ---------------------------- */
+    /* SECTION */
+    /* ---------------------------- */
+    .azapi-ocr-section {
+      padding: 50px 20px;
+      max-width: 1150px;
+      height: 100%;
+      /* <-- Updated to remove scroll */
+      margin: auto;
+      text-align: center;
+
+
+
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--mid);
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+
+    /* ---------------------------- */
+    /* SLIDER */
+    /* ---------------------------- */
+    .ocr-slider {
+      position: relative;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .ocr-card {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.8s ease;
+    }
+
+    .ocr-card.active {
+      opacity: 1;
+      transform: translateX(0);
+      position: relative;
+    }
+
+    /* CARD STYLE */
+    .ocr-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 40px;
+      border-radius: 30px;
+      background: var(--glass-bg);
+      border: 5px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.062);
+      overflow: hidden;
+    }
+
+    .ocr-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50px;
+      width: 180%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(251, 158, 50, 0.15), transparent);
+      transform: skewX(-10deg);
+      transition: 0.4s ease;
+    }
+
+    .ocr-card:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    /* LEFT CONTENT */
+    .card-left {
+      flex: 1.2;
+      text-align: left;
+    }
+
+    .card-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 15.5px;
+      line-height: 1.7;
+      color: var(--mid);
+      margin-bottom: 25px;
+    }
+
+    /* BUTTON */
+    .get-started-btn {
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(51, 50, 50, 0.6);
+      color: var(--dark);
+      font-weight: 600;
+      border-radius: 50px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .get-started-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+    }
+
+    /* IMAGE */
+    .card-img {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-img img {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 16px;
+      border: 3px solid var(--accent);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+      transition: 0.3s ease;
+    }
+
+    .card-img img:hover {
+      transform: scale(1.05);
+    }
+
+    /* ---------------------------- */
+    /* ARROWS — OUTSIDE THE CARD */
+    /* ---------------------------- */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(14px);
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s ease;
+      z-index: 20;
+    }
+
+    .arrow-left {
+      left: -65px;
+    }
+
+    .arrow-right {
+      right: -65px;
+    }
+
+    .slider-arrow:hover {
+      transform: translateY(-50%) scale(1.12);
+    }
+
+    .slider-arrow svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--dark);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width: 900px) {
+      .ocr-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .card-left {
+        text-align: center;
+      }
+
+      .arrow-left {
+        left: -10px;
+      }
+
+      .arrow-right {
+        right: -10px;
+      }
+    }
+
+    .color-cycle {
+      animation: cycleColors 6s infinite ease-in-out;
+      font-weight: 700;
+    }
+
+    @keyframes cycleColors {
+      0% {
+        color: #FB9E32;
+      }
+
+      /* primary */
+      33% {
+        color: #D26059;
+      }
+
+      /* secondary */
+      66% {
+        color: #81414B;
+      }
+
+      /* mid */
+      100% {
+        color: #FB9E32;
+      }
+
+      /* loop back */
+    }
+
+
+    /* / how does  */
+    :root {
+      --primary: #FB9E32;
+      --accent: #FBC86D;
+      --secondary: #D26059;
+      --dark: #3A151C;
+      --mid: #81414B;
+
+      --glass-bg: rgba(255, 255, 255, 0.30);
+      --glass-border: rgba(255, 255, 255, 0.45);
+    }
+
+    /* SECTION */
+    .azapi-work-section {
+      width: 100%;
+      height: 80vh;
+      background: linear-gradient(135deg, #ffffff 0%, #ffd8b0 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 20px;
+      padding-top: 20px;
+      overflow: hidden;
+      font-family: "Poppins", sans-serif;
+    }
+
+
+    /* TITLE */
+    .azapi-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 25px;
+    }
+
+    /* TABS */
+    .azapi-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .azapi-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      padding: 10px 18px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 500;
+      font-size: 14px;
+      /* slightly smaller */
+      color: var(--dark);
+      white-space: nowrap;
+    }
+
+    .azapi-tab img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .azapi-tab.active {
+      background: var(--secondary);
+      color: white;
+      box-shadow: 0 5px 20px rgba(251, 157, 50, 0.137);
+    }
+
+    /* PROGRESS TRACK */
+    .progress-area {
+      position: relative;
+      width: 350px;
+      margin: 0 auto 40px auto;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      border-radius: 10px;
+      transition: width 0.45s ease;
+    }
+
+    /* STEP CIRCLES */
+    .step-circles {
+      position: absolute;
+      top: -13px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .step {
+      width: 26px;
+      height: 26px;
+      background: #ffffff;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .step.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 0 12px rgba(251, 158, 50, 0.6);
+    }
+
+    /* IMAGE DISPLAY */
+    .azapi-image-box {
+      width: 100%;
+      max-width: 520px;
+      height: 300px;
+      margin: 0 auto;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .azapi-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      /* FULL IMAGE, NO CROPPING */
+      background: #fff;
+      padding: 10px;
+      /* optional, makes it airy */
+      animation: fadeIn 0.6s ease;
+    }
+
+
+    /* fade effect */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+
+
+    /* Tailored Best CAPTCHA Solver and OCR Solutions for Your Industry Worldwide */
+
+    .industry-section {
+      text-align: center;
+      padding: 40px 40px;
+      max-width: 100%;
+      margin: auto;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg,
+          rgba(251, 157, 50, 0.068),
+          rgba(251, 199, 109, 0.062)), #ffffff;
+
+      color: #111;
+      color: #111;
+    }
+
+    .industry-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .industry-subtitle {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 50px;
+    }
+
+    /* Grid */
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 30px;
+      padding: 10px;
+    }
+
+    /* Cards */
+    .industry-card {
+      width: 40vh;
+      background: #fff;
+      padding: 35px 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: all .25s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .industry-card i{
+      height: 25px;
+      width: 25px;
+
+    }
+
+    /* Hover Lighting Effect */
+    .industry-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Icons */
+    .industry-card i {
+      font-size: 40px;
+      color: #FB9E32;
+      margin-bottom: 10px;
+      display: inline-block;
+      transition: .3s ease;
+    }
+
+    .industry-card:hover i {
+      transform: scale(1.15);
+    }
+
+    .industry-card h3 {
+      margin: 0;
+      margin-top: 2px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* Click animation */
+    .industry-card:active {
+      transform: scale(0.97);
+    }
+
+    /* Tablets (max-width: 992px) – 3 cards */
+    @media (max-width: 992px) {
+      .industry-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Mobile (max-width: 768px) – 2 cards */
+    @media (max-width: 768px) {
+      .industry-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .industry-card {
+        width: 100%;
+      }
+    }
+
+    /* Extra small screens (max-width: 480px) – still 2 cards but tighter */
+    @media (max-width: 480px) {
+      .industry-grid {
+        gap: 20px;
+      }
+    }
+
+
+
+    /* faq section */
+    :root {
+      --c1: #FB9E32;
+      --c2: #FBC86D;
+      --c3: #D26059;
+      --c4: #3A151C;
+      --c5: #81414B;
+
+      --glass-bg: rgba(255, 255, 255, 0.35);
+      --glass-blur: blur(18px);
+      --radius: 20px;
+    }
+
+    /* MAIN FAQ SECTION */
+    .faq-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 20px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .faq-title {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+      background: linear-gradient(to right, var(--c1), var(--c3), var(--c5));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* GLASS CARD */
+    .faq-card {
+      margin-bottom: 25px;
+      border-radius: var(--radius);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      transition: 0.35s ease;
+      overflow: hidden;
+    }
+
+    .faq-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--c1);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .faq-question {
+      padding: 22px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--c4);
+      user-select: none;
+    }
+
+    /* ARROW */
+    .arrow {
+      width: 22px;
+      height: 22px;
+      transition: 0.35s ease;
+      flex-shrink: 0;
+      stroke: var(--c1);
+    }
+
+    .faq-card.active .arrow {
+      transform: rotate(180deg);
+      stroke: var(--c3);
+    }
+
+    /* ANSWER */
+    .faq-answer {
+
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 28px;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+      transition: all 0.35s ease;
+    }
+
+    .faq-card.active .faq-answer {
+      max-height: 250px;
+      padding-bottom: 22px;
+    }
+
+
+    /* blog */
+
+    :root {
+      --primary: #FB9E32;
+      --primary-light: #FBC86D;
+      --warm: #D26059;
+      --dark: #3A151C;
+      --dark-soft: #81414B;
+
+      --card-bg: #ffffff;
+    }
+
+    .blog-section {
+      padding: 0px 20px 60px 20px;
+      background: linear-gradient(135deg,
+          rgba(251, 157, 50, 0.075),
+          rgba(251, 199, 109, 0.073)), #ffffff;
+      /* ain bg white */
+      display: flex;
+      justify-content: center;
+      max-height: 100%;
+
+    }
+
+    .blog-container {
+      max-width: 1200px;
+      width: 100%;
+
+    }
+
+    .blog-title {
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 50px;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 35px;
+    }
+
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 8px 20px rgba(58, 21, 28, 0.18);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(58, 21, 28, 0.25);
+    }
+
+    .blog-img {
+      width: 100%;
+      height: 210px;
+
+    }
+
+    .blog-content {
+      padding: 20px 25px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .blog-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .blog-title-card {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .blog-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .blog-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .blog-read {
+      background: transparent;
+      color: #000;
+      padding: 6px 14px;
+      /* smaller button */
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid #000;
+      /* black border */
+      display: inline-block;
+      transition: 0.3s ease;
+    }
+
+    .blog-read:hover {
+      background: #000;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+
+
+    .blog-date {
+      font-size: 14px;
+      color: var(--dark-soft);
+    }
+
+
+    /* offer section */
+
+    .trial-section {
+      width: 100%;
+      height: 330px;
+      padding: 40px 8%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* CENTERED */
+      position: relative;
+      overflow: hidden;
+
+      text-align: center;
+      /* CENTER TEXT */
+      font-family: "Poppins", sans-serif;
+
+
+    }
+
+    .bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      z-index: 1;
+      opacity: 1;
+      pointer-events: none;
+      scroll-behavior: none;
+    }
+
+    .trial-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+          rgba(251, 157, 50, 0.075),
+          rgba(251, 199, 109, 0.073)), #ffffff00;
+      z-index: 2;
+    }
+
+    .trial-content {
+      position: relative;
+      z-index: 3;
+      max-width: 650px;
+      color: #000000;
+      margin-top: 70px
+    }
+
+    .trial-content h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .trial-content p {
+      font-size: 16px;
+      opacity: 0.92;
+      margin-bottom: 22px;
+    }
+
+    .button-md {
+      padding: 10px 24px;
+      background: transparent;
+      color: #170101;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: 0.25s ease;
+      border: none;
+      /* remove old border */
+    }
+
+    .button-md::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: 12px;
+      background: linear-gradient(120deg, #ffffff, #FB9E32, #ff0000, #ffffff);
+      background-size: 300% 300%;
+      animation: borderAnim 3s linear infinite;
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    @keyframes borderAnim {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+
+    .button-md:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.25),
+        0 0 40px rgba(255, 140, 0, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .button-md:active {
+      transform: scale(0.92);
+    }
+
+
+
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      background: rgba(0, 0, 0, 0.35);
+      animation: ripple 0.6s linear;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .animate-text {
+      animation: colorChange 3s infinite alternate;
+    }
+
+    @keyframes colorChange {
+      0% {
+        color: #FB9E32;
+        /* Color 1 */
+      }
+
+      60% {
+        color: #ff0000;
+        /* Color 2 */
+      }
+
+      100% {
+        color: #3A151C;
+        /* Color 3 */
+      }
+    }
+
+
+    footer {
+        /* Slightly darker, clean background */
+        background: #090e11; 
+        color: #e5e5e5;
+        padding: 40px 0 15px; /* Reduced vertical padding */
+        font-size: 13px;
+    }
+
+    .footer-container {
+        width: 90%;
+        max-width: 1100px; /* Slightly narrower max width */
+        margin: auto;
+    }
+
+    .footer-top {
+        /* Grid changed to 1.5fr (Brand), 1fr (Links), 2.5fr (Documents) */
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 2.5fr; 
+        gap: 30px;
+        padding-bottom: 25px; /* Slightly reduced padding */
+        border-bottom: 1px solid #ffffff14;
+    }
+
+    /* --- Brand Column --- */
+    .footer-brand-logo img {
+        width: 120px; /* Smaller logo */
+        margin-bottom: 8px;
+    }
+
+    .footer-brand p {
+        line-height: 1.4; /* Tighter line spacing */
+        margin-bottom: 12px;
+        color: #a0a0a0;
+        font-size: 12px; /* Smaller text */
+    }
+
+    .contact-btn {
+        background: #FB9E32;
+        border: none;
+        width: 160px; /* Smaller button */
+        padding: 8px 0; /* Smaller button padding */
+        font-size: 13px;
+        font-weight: 600;
+        color: #090e11;
+        border-radius: 6px; /* Slightly tighter radius */
+        text-align: center;
+        display: inline-block;
+        transition: 0.3s ease;
+        letter-spacing: 0.4px;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(251, 158, 50, 0.2);
+    }
+
+    .contact-btn:hover {
+        background: #ffb861; 
+        box-shadow: 0 6px 15px rgba(251, 158, 50, 0.4);
+        transform: translateY(-1px);
+    }
+
+    .small-logos {
+        display: flex;
+        gap: 6px; /* Tighter gap */
+        margin-top: 15px;
+    }
+
+    .small-logos img {
+        height: 30px; /* Smaller badges */
+        width: 30px;
+        opacity: 0.8;
+    }
+    
+    /* --- Link Columns --- */
+    .footer-col h3 {
+        margin-bottom: 8px; /* Reduced space after heading */
+        font-size: 14px; /* Smaller heading text */
+        color: #fff;
+        font-weight: 700; /* Bolded for impact */
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #FB9E32;
+        display: inline-block;
+        padding-bottom: 2px;
+        margin-top: 0;
+    }
+
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        /* Consolidated link list into 3 columns */
+        display: flex; 
+        flex-direction: column;
+        flex-wrap: wrap; 
+        max-height: 150px; /* Reduced max height for 3 tight columns */
+        align-content: flex-start;
+    }
+
+    .footer-col ul.links-list {
+        max-height: none; /* Keep the links column simple */
+    }
+
+    .footer-col ul li {
+        margin-bottom: 4px; /* Tighter vertical link spacing */
+        width: 33.33%; /* Documents column split into 3 */
+        min-width: 100px;
+    }
+
+    .footer-col ul.links-list li {
+        width: 100%;
+    }
+
+    .footer-col ul li a {
+        color: #a0a0a0;
+        transition: 0.2s;
+        font-size: 12px; /* Smaller link text */
+    }
+
+    .footer-col ul li a:hover {
+        color: #FB9E32;
+    }
+    
+    /* --- Contact & Social Section --- */
+    .footer-contact-social {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px; /* Reduced top margin */
+        padding-bottom: 5px;
+    }
+
+    .contact-info h3 {
+        font-size: 14px; /* Consistent with other headings */
+        font-weight: 600;
+        color: white;
+        margin-bottom: 6px;
+    }
+
+    .contact-info p {
+        margin: 2px 0; /* Very tight vertical spacing */
+        font-size: 13px; 
+        color: #a0a0a0;
+        display: flex;
+        align-items: center;
+    }
+
+    .contact-info .fa-regular,
+    .contact-info .fa-solid {
+        margin-right: 6px; /* Tighter icon/text spacing */
+        color: #FB9E32;
+        font-size: 14px;
+    }
+
+    .social-icons {
+        gap: 12px; /* Tighter social icon spacing */
+        align-items: center;
+    }
+
+/* --- Social Icons (Modified for White Color) --- */
+.social-icons a {
+    color: #ffffff; /* Changed to white */
+    font-size: 18px; 
+    opacity: 0.9; /* Slightly more opaque for better visibility */
+    transition: 0.2s;
+}
+
+.social-icons a:hover {
+    opacity: 1;
+    color: #FB9E32; /* Still turns orange on hover */
+    transform: scale(1.1);
+}
+
+    .footer-bottom {
+        border-top: 1px solid #ffffff14;
+        padding-top: 12px; /* Reduced padding */
+        text-align: center;
+        color: #707070;
+        font-size: 11px; /* Very small copyright text */
+    }
+
+    /* Responsive Design adjustments for smaller sizes */
+    @media (max-width: 992px) {
+        .footer-top {
+            grid-template-columns: 1fr 1fr;
+        }
+        .footer-col:nth-child(3) {
+            grid-column: span 2;
+        }
+        .footer-col ul {
+             max-height: 250px; /* Adjust max height for 2 columns on tablet */
+        }
+        .footer-col ul li {
+            width: 50%; /* Back to 2 columns */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .footer-top {
+            grid-template-columns: 1fr;
+        }
+        .footer-col:nth-child(3) {
+            grid-column: span 1;
+        }
+        .footer-col ul {
+             max-height: none;
+             display: block;
+        }
+        .footer-col ul li {
+            width: 100%;
+        }
+        .footer-contact-social {
+            flex-direction: column;
+            align-items: flex-start; /* Align text left when stacked */
+            gap: 10px;
+        }
+    }
+    </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <img src="./img/azapi-logo.webp" alt="Azapi Logo" style="height:42px; width:auto;">
+    <ul>
+      <li>Home</li>
+
+      <li>Services ▾
+        <div class="dropdown">
+          <a href="#">Captcha Solving</a>
+          <a href="#">Bypass API</a>
+          <a href="#">AI Tools</a>
+        </div>
+      </li>
+
+      <li>Blog</li>
+      <li>About Us</li>
+      <li>Partner Network</li>
+      <li>Demo</li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-glow" aria-label="Login">Login</button>
+      <button class="btn btn-glow" aria-label="Register">Register</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Best Captcha Solver <br> in the World <span class="spark" aria-hidden="true">✨</span>
+      </h1>
+
+      <h2 class="subtitle" id="subtitle">Your Gateway to Seamless Access</h2>
+
+      <p>
+        Break through barriers effortlessly with the Best Captcha Solver in the World.
+        Our cutting-edge technology delivers lightning-fast, accurate solutions,
+        giving you seamless access to the web without interruptions.
+      </p>
+
+      <!-- Get Started: new Border Sweep + glassy -->
+      <button class="btn btn-border" id="cta">Get Started</button>
+    </div>
+
+    <div class="hero-card" id="tilt">
+      <img src="./img/banner-3.webp" alt="captcha-demo" class="hero-img" id="heroImg" />
+    </div>
+  </section>
+
+  <script>
+    /* tilt effect for hero image (keep) */
+    const tilt = document.getElementById('tilt');
+    const heroImg = document.getElementById('heroImg');
+    if (tilt && heroImg) {
+      tilt.addEventListener('mousemove', (e) => {
+        const rect = tilt.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        heroImg.style.transform = `rotateX(${y * 8}deg) rotateY(${x * -12}deg) translateZ(12px)`;
+      });
+      tilt.addEventListener('mouseleave', () => heroImg.style.transform = '');
+    }
+
+    /* Subtitle color cycle: shows one color after another every 2s
+       as requested: #81414B, #3A151C, white, #1C6387
+    */
+    (function subtitleColorCycle() {
+      const subtitle = document.getElementById('subtitle');
+      if (!subtitle) return;
+      const colors = ["#81414B", "#3A151C", "#1C6387"];
+      let i = 0;
+      subtitle.style.color = colors[0];
+      setInterval(() => {
+        i = (i + 1) % colors.length;
+        subtitle.style.color = colors[i];
+      }, 2000);
+    })();
+
+    /* make sparkle emoji accessible: brief aria-hidden used above */
+  </script>
+
+
+
+
+  <!-- why section  -->
+  <section class="main-section">
+
+    <div class="blob"></div>
+    <div class="blob2"></div>
+
+    <section class="why-section fade-up">
+      <h2 class="title123">Why AZAPI?</h2>
+      <p class="subtitle123">
+        AZAPI stands out as the best captcha solvers, offering high accuracy and fast processing in OCR and Captcha
+        services, ensuring reliable results and improved performance. Our APIs are easy to integrate, scalable to handle
+        large volumes, and competitively priced.
+      </p>
+    </section>
+
+    <section class="extension-section fade-up">
+
+      <div class="ext-left">
+        <h2 class="ext-title">Download Best CAPTCHA Solver<br>Extension</h2>
+        <p class="ext-text">
+          Easily Solve CAPTCHA's Using Our automated captcha-solving extension. Our system process captchas quickly and
+          accurately, helping you save time and effort..
+        </p>
+        <button class="ext-btn">
+          Explore More <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="ext-right">
+        <img src="./img/captcha-solver-extension.webp" alt="CAPTCHA Extension">
+      </div>
+
+    </section>
+
+  </section>
+
+  <script>
+    const elements = document.querySelectorAll(".fade-up");
+    function reveal() {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) el.classList.add("visible");
+      });
+    }
+    window.addEventListener("scroll", reveal);
+    window.addEventListener("load", reveal);
+  </script>
+
+  <script>
+    const nav = document.querySelector("nav");
+    const navLinks = document.querySelectorAll("nav ul li");
+
+    window.addEventListener("scroll", function () {
+      const trigger = document.querySelector(".main-section").offsetTop;
+
+      if (window.scrollY >= trigger - 80) {
+        // Change nav to black theme
+        nav.classList.add("nav-dark");
+        navLinks.forEach(li => li.classList.add("nav-dark-item"));
+      } else {
+        // Revert to white theme
+        nav.classList.remove("nav-dark");
+        navLinks.forEach(li => li.classList.remove("nav-dark-item"));
+      }
+    });
+  </script>
+
+
+
+  <!-- OCR SECTION -->
+
+
+  <div class="section-wrapper">
+    <h2>AZAPI Services Customized to Suit Your Specific Needs</h2>
+    <p>Discover specialized OCR and CAPTCHA solutions for seamless <br>document processing and security</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('ocr')"><b>OCR Services</b></button>
+      <button class="tab-btn" onclick="switchTab('captcha')"><b>Captcha Services</b></button>
+    </div>
+
+    <div class="slider-container" id="slider">
+      <div class="swipe-hint" id="swipeHint"> ← Swipe →</div>
+
+      <div class="slider-track" id="sliderTrack">
+
+        <div class="card ocr"><img src="img/aadhar-reader.webp">
+          <h3>Aadhaar OCR</h3>
+          <p>Fast & accurate Aadhaar OCR extraction.</p><button>Read more</button>
+        </div>
+
+        <div class="card ocr"><img src="img/pan-reader.webp">
+          <h3>PAN OCR</h3>
+          <p>Extract PAN details with precision.</p><button>Read more</button>
+        </div>
+
+        <div class="card ocr"><img src="img/bill-reader.webp">
+          <h3>E-Invoice OCR</h3>
+          <p>Extract invoice data instantly.</p><button>Read more</button>
+        </div>
+
+        <div class="card ocr"><img src="img/invoice-reader.webp">
+          <h3>BILL OCR</h3>
+          <p>Our bill OCR service offers a powerful .</p><button>Read more</button>
+        </div>
+
+        <div class="card ocr"><img src="img/dl-scan.webp">
+          <h3>Driving License OCR</h3>
+          <p>Extract DL information accurately.</p><button>Read more</button>
+        </div>
+
+        <div class="card ocr"><img src="img/new-passport.webp">
+          <h3>Passport OCR</h3>
+          <p>Extract passport information easily.</p><button>Read more</button>
+        </div>
+
+        <div class="card captcha" style="display:none;"><img src="img/mathCaptcha.webp">
+          <h3>Math-CAPTCHA </h3>
+          <p>Automatically solve image captchas.</p><button>Read more</button>
+        </div>
+
+        <div class="card captcha" style="display:none;"><img src="img/captcha-reader.webp">
+          <h3>Text-CAPTCHA </h3>
+          <p>Fast & accurate recaptcha solving.</p><button>Read more</button>
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+  <script>
+    let slider = document.getElementById("slider");
+    let track = document.getElementById("sliderTrack");
+    let slidePos = 0;
+
+    let autoScrollDelay = 3000;
+    let pauseDuration = 8000;
+    let autoScrollEnabled = true;
+    let pauseTimeout;
+
+    function startAutoScroll() {
+      return setInterval(() => {
+        if (!autoScrollEnabled) return;
+
+        const visibleCards = [...track.children].filter(x => x.style.display !== "none");
+        if (visibleCards.length === 0) return;
+
+        const firstCard = visibleCards[0];
+        let cardWidth = firstCard.offsetWidth + 20;
+
+        slidePos += cardWidth;
+
+        if (slidePos >= track.scrollWidth - slider.offsetWidth) {
+          slidePos = 0;
+        }
+
+        slider.scrollTo({ left: slidePos, behavior: "smooth" });
+
+      }, autoScrollDelay);
+    }
+
+    let autoScrollInterval = startAutoScroll();
+
+    function pauseAutoScroll() {
+      autoScrollEnabled = false;
+      clearTimeout(pauseTimeout);
+
+      pauseTimeout = setTimeout(() => {
+        autoScrollEnabled = true;
+      }, pauseDuration);
+    }
+
+    slider.addEventListener("scroll", () => {
+      pauseAutoScroll();
+    });
+
+    function switchTab(type) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+
+      document.querySelectorAll(".card").forEach(card => {
+        card.style.display = card.classList.contains(type) ? "block" : "none";
+      });
+
+      slidePos = 0;
+      slider.scrollTo({ left: 0, behavior: "smooth" });
+    }
+
+    setTimeout(() => {
+      document.getElementById("swipeHint").style.opacity = "0";
+    }, 5000);
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener("mousedown", (e) => {
+      isDown = true;
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+      pauseAutoScroll();
+    });
+
+    slider.addEventListener("mouseleave", () => {
+      isDown = false;
+    });
+
+    slider.addEventListener("mouseup", () => {
+      isDown = false;
+    });
+
+    slider.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.2;
+      slider.scrollLeft = scrollLeft - walk;
+
+      pauseAutoScroll();
+    });
+  </script>
+
+
+  <script>
+    let bar = document.querySelector(".progress-fill");
+    let direction = 1;            // 1 = right, -1 = left
+    let pos = 0;                  // current position
+    const speed = 2;              // movement speed
+    const maxPos = 100;           // max translate value
+
+    function animateProgress() {
+      pos += speed * direction;
+
+      if (pos >= maxPos || pos <= 0) {
+        direction *= -1;         // reverse direction
+      }
+
+      bar.style.transform = `translateX(${pos}px)`;
+      requestAnimationFrame(animateProgress);
+    }
+
+    // start animation
+    animateProgress();
+  </script>
+
+
+
+
+
+  <section class="why-us">
+    <h2>Why Choose Us</h2>
+    <p>See why AZAPI stands out with accuracy, flexibility, and seamless integration.</p>
+
+    <div class="why-grid">
+
+      <div class="why-card">
+        <div class="icon"><i class="fa-solid fa-sliders"></i></div>
+        <h3>Customizable Solutions</h3>
+        <p>Tailor our services to meet your specific business needs with flexible options.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>24/7 Support</h3>
+        <p>We provide round-the-clock support to help you every step of the way.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <h3>Cost-Effective</h3>
+        <p>Benefit from affordable pricing models designed to fit various budgets,</p>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+
+  <!-- what azapi section  -->
+
+
+  <!-- EVERYTHING STARTS HERE -->
+  <div class="ank-section">
+
+    <div class="ank-wrap">
+
+      <h2 class="ank-title">What AZAPI Delivers — Key Features Unboxed</h2>
+      <p class="ank-sub">Discover AZAPI's key features and their impact on your document processing.</p>
+
+      <div class="ank-grid">
+
+        <div class="ank-card">
+          <div class="ank-icon">
+            <img src="img/high-processing-speed.webp">
+          </div>
+          <h3>High Processing Speed</h3>
+          <p>Quickly handle large volumes of CAPTCHA solving, identity documents and invoices.</p>
+        </div>
+
+        <div class="ank-card">
+          <div class="ank-icon">
+            <img src="img/seamless-integrations.webp">
+          </div>
+          <h3>Seamless API Integration</h3>
+          <p>You can easily integrate our solutions into your existing systems.</p>
+        </div>
+
+        <div class="ank-card">
+          <div class="ank-icon">
+            <img src="img/exce-accuracy.webp">
+          </div>
+          <h3>Exceptional Accuracy</h3>
+          <p>Ensure precise results for all your OCR and CAPTCHA needs.</p>
+        </div>
+
+        <div class="ank-card">
+          <div class="ank-icon">
+            <img src="img/data-extraction.webp">
+          </div>
+          <h3>Automated Data Extraction</h3>
+          <p>Quickly extract text from documents, reducing manual input and errors.</p>
+        </div>
+
+        <div class="ank-card">
+          <div class="ank-icon">
+            <img src="img/enhanced-security.webp">
+          </div>
+          <h3>Enhanced Security</h3>
+          <p>Automated CAPTCHA solving ensures security and protects data.</p>
+        </div>
+
+        <div class="ank-card">
+          <div class="ank-icon">
+            <img src="img/scalability.webp">
+          </div>
+          <h3>Scalability</h3>
+          <p>Grow easily without losing speed or performance.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- EVERYTHING ENDS HERE -->
+
+  <script>
+    /* REVEAL ANIMATION */
+    const ankCards = document.querySelectorAll(".ank-card");
+
+    const ankObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    ankCards.forEach(card => ankObserver.observe(card));
+
+    /* RIPPLE */
+    document.querySelectorAll(".ank-card").forEach(card => {
+      card.addEventListener("click", function (e) {
+        let ripple = document.createElement("span");
+        ripple.classList.add("ank-ripple");
+        ripple.style.left = `${e.clientX - card.offsetLeft}px`;
+        ripple.style.top = `${e.clientY - card.offsetTop}px`;
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+  </script>
+
+  <!-- 
+/overview section -->
+
+  <section class="azapi-ocr-section">
+
+    <h2 class="section-title">AZAPI Overview Streamlining CAPTCHA Solving and OCR with the <br> <span
+        class="color-cycle">Best Captcha Solvers</span></h2>
+
+    <p class="section-subtitle">
+      Explore how AZAPI simplifies CAPTCHA solving and text recognition.
+      Our solutions deliver reliable and scalable performance for accurate CAPTCHA resolution .
+
+    </p>
+
+    <div class="ocr-slider">
+
+      <!-- ARROWS -->
+      <div class="slider-arrow arrow-left" onclick="prevSlide()">
+        <svg viewBox="0 0 24 24">
+          <path d="M15 4L7 12L15 20" />
+        </svg>
+      </div>
+
+      <div class="slider-arrow arrow-right" onclick="nextSlide()">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 4L17 12L9 20" />
+        </svg>
+      </div>
+
+      <!-- CARDS -->
+      <div class="ocr-card active">
+        <div class="card-left">
+          <h3 class="card-title">OCR Services to Scan IDs, Invoices, and More</h3>
+          <p class="card-desc">Easily scan and digitize IDs, bills, invoices, and more with our OCR products.Streamline
+            data extraction and reduce manual work.</p>
+          <button class="get-started-btn">Get Started</button>
+        </div>
+        <div class="card-img">
+          <img src="img/ocr-services.webp" alt="OCR Image">
+        </div>
+      </div>
+
+      <div class="ocr-card">
+        <div class="card-left">
+          <h3 class="card-title">CAPTCHA Services to Solve</h3>
+          <p class="card-desc">Efficiently tackle CAPTCHA challenges with our advanced solutions. Enhance automation and
+            reduce manual effort.</p>
+          <button class="get-started-btn">Get Started</button>
+        </div>
+        <div class="card-img">
+          <img src="img/chptcha.webp" alt="Captcha Image">
+        </div>
+      </div>
+
+      <div class="ocr-card">
+        <div class="card-left">
+          <h3 class="card-title">Integration in Web Apps</h3>
+          <p class="card-desc">Integrate our CAPTCHA and OCR solutions into your applications with ease.</p>
+          <button class="get-started-btn">Get Started</button>
+        </div>
+        <div class="card-img">
+          <img src="img/integration.webp" alt="API Image">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    let index = 0;
+    const cards = document.querySelectorAll(".ocr-card");
+
+    function showSlide(i) {
+      cards.forEach(c => c.classList.remove("active"));
+      cards[i].classList.add("active");
+    }
+
+    function nextSlide() {
+      index = (index + 1) % cards.length;
+      showSlide(index);
+    }
+
+    function prevSlide() {
+      index = (index - 1 + cards.length) % cards.length;
+      showSlide(index);
+    }
+
+    /* AUTO SLIDE */
+    setInterval(() => {
+      nextSlide();
+    }, 5000);
+  </script>
+
+
+
+
+  <!-- / how does work -->
+  <section class="azapi-work-section">
+
+    <h2 class="azapi-title">How Does AZAPI Work?</h2>
+
+    <!-- TABS -->
+    <div class="azapi-tabs" id="tabs">
+      <div class="azapi-tab active" data-step="0">
+        <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png">
+        Sign In Into AZAPI
+      </div>
+
+      <div class="azapi-tab" data-step="1">
+        <img src="https://cdn-icons-png.flaticon.com/512/3500/3500833.png">
+        Choose & Activate Plan
+      </div>
+
+      <div class="azapi-tab" data-step="2">
+        <img src="https://cdn-icons-png.flaticon.com/512/992/992700.png">
+        Test & Integrate
+      </div>
+    </div>
+
+    <!-- PROGRESS + CIRCLES -->
+    <div class="progress-area">
+
+      <div class="step-circles">
+        <div class="step active" id="circle0">1</div>
+        <div class="step" id="circle1">2</div>
+        <div class="step" id="circle2">3</div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progress"></div>
+      </div>
+
+    </div>
+
+    <!-- IMAGE -->
+    <div class="azapi-image-box">
+      <img id="processImage" src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg">
+    </div>
+
+  </section>
+
+
+  <script>
+    const images = [
+      "img/tabs-1.webp",
+      "img/how-work-two.webp",
+      "img/how-work-one.webp"
+    ];
+
+    let currentStep = 0;
+    const tabs = document.querySelectorAll(".azapi-tab");
+    const imageBox = document.getElementById("processImage");
+    const progress = document.getElementById("progress");
+    const circles = document.querySelectorAll(".step");
+
+    /* Change Step */
+    function changeStep(step) {
+      currentStep = step;
+
+      // Change image
+      imageBox.src = images[step];
+
+      // Tab active state
+      tabs.forEach(t => t.classList.remove("active"));
+      tabs[step].classList.add("active");
+
+      // Circle active state
+      circles.forEach((c, i) => {
+        if (i <= step) c.classList.add("active");
+        else c.classList.remove("active");
+      });
+
+      // Fill progress bar
+      const fillPercent = (step + 1) * 33.33;
+      progress.style.width = fillPercent + "%";
+    }
+
+    /* Manual Click */
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        changeStep(parseInt(tab.dataset.step));
+      });
+    });
+
+    /* Auto Loop */
+    setInterval(() => {
+      currentStep = (currentStep + 1) % images.length;
+      changeStep(currentStep);
+    }, 3000);
+  </script>
+
+
+  <!-- Tailored Best CAPTCHA Solver and OCR Solutions for Your Industry Worldwide -->
+
+  <!-- Icons CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <section class="industry-section">
+
+      <h1 class="industry-title">Tailored Best CAPTCHA Solver & OCR Solutions</h1>
+      <p class="industry-subtitle">
+        Optimized OCR and CAPTCHA tools for seamless global integration. Drive efficiency with tailored solutions.
+      </p>
+
+      <div class="industry-grid">
+
+        <div class="industry-card" onclick="cardClicked('Fintech')">
+          <i class="fas fa-credit-card" style="font-size:40px;color:#FB9E32"></i>
+          <h3>Fintech</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Banking')">
+          <i class="fas fa-landmark" style="font-size:40px;color:#FB9E32"></i>
+          <h3>Banking</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Retail')">
+          <i class="fas fa-store" style="font-size:40px;color:#FB9E32"></i>
+          <h3>Retail & E-Commerce</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Legal')">
+          <i class="fas fa-scale-balanced" style="font-size:40px;color:#FB9E32"></i>
+          <h3>Legal</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Healthcare')">
+          <i class="fas fa-heartbeat" style="font-size:40px;color:#FB9E32"></i>
+          <h3>Healthcare</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Pharma')">
+          <i class="fas fa-capsules"
+            style="font-size: 40px;color: #FB9E32;margin-bottom: 10px;display: inline-block;transition: .3s ease;"></i>
+          <h3>Pharma</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Automotive')">
+          <i class="fas fa-car" style="font-size:40px;color:#FB9E32;transition: .3s ease;"></i>
+          <h3>Automotive</h3>
+        </div>
+
+        <div class="industry-card" onclick="cardClicked('Logistics')">
+          <i class="fas fa-truck" style="font-size:40px;color:#FB9E32"></i>
+          <h3>Logistics</h3>
+        </div>
+
+      </div>
+    </section>
+
+
+    <script>
+      /* Simple interactive click event */
+      function cardClicked(name) {
+        alert(name + " industry selected!");
+      }
+    </script>
+
+
+
+    <!-- faq section -->
+    <div class="faq-section">
+      <h2 class="faq-title">FAQs</h2>
+
+      <div class="faq-card">
+        <div class="faq-question">
+          What is an OCR service?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div class="faq-answer">
+          An OCR (Optical Character Recognition) service is a tool that converts different types of documents, such as
+          scanned paper documents, PDFs, or images captured by a digital camera, into editable and searchable data.
+        </div>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question">
+          How does CAPTCHA verify human users?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div class="faq-answer">
+
+          CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart) works by presenting a
+          challenge, like recognizing distorted text or identifying objects in images, that humans can solve easily but
+          automated bots struggle with, ensuring only real users access a service.
+        </div>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question">
+          Can OCR be integrated with CAPTCHA?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div class="faq-answer">
+
+          Yes, OCR services can be integrated with CAPTCHA systems to enhance the accuracy of recognizing and processing
+          text in images, especially for automated processes that need to verify text-based CAPTCHAs.
+        </div>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question">
+          What are the use cases for OCR + CAPTCHA?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div class="faq-answer">
+          Common use cases include automating data entry, enhancing document management systems, ensuring secure user
+          authentication, and improving accessibility by converting images into readable text.
+        </div>
+      </div>
+
+      <div class="faq-card">
+        <div class="faq-question">
+          Is OCR data processed securely?
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div class="faq-answer">
+
+          Yes, most OCR services implement robust security measures to ensure that the data processed is encrypted and
+          protected from unauthorized access, safeguarding sensitive information.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const faqCards = document.querySelectorAll('.faq-card');
+
+      faqCards.forEach(card => {
+        card.addEventListener('click', () => {
+          card.classList.toggle('active');
+        });
+      });
+    </script>
+
+
+
+    <section class="blog-section">
+      <div class="blog-container">
+
+        <h2 class="blog-title">Latest Blog Posts</h2>
+
+        <div class="blog-grid">
+
+          <!-- CARD 1 -->
+          <div class="blog-card">
+            <img
+              src="https://azapi.ai/wp-content/uploads/2025/11/best-captcha-solving-api-for-accessibility-disabled-users.webp"
+              class="blog-img" alt="Blog Image">
+            <div class="blog-content">
+              <span class="blog-tag">Inclusive</span>
+              <h3 class="blog-title-card">Best CAPTCHA Solving API for Accessibility & Disabled Users: Simplifying
+                Digital Access</h3>
+              <p class="blog-desc">
+                Best CAPTCHA Solving API for Accessibility & Disabled Users simplifies digital access, ensures
+                inclusivity accurate, friendly solutions.
+              </p>
+              <div class="blog-footer">
+                <span class="blog-date">Nov 17, 2025</span>
+                <a href="#" class="blog-read">Read More</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="blog-card">
+            <img
+              src="https://azapi.ai/wp-content/uploads/2025/11/best-captcha-solver-api-under-budget-for-startups.webp"
+              class="blog-img" alt="Blog Image">
+            <div class="blog-content">
+              <span class="blog-tag" style="background: var(--warm)">Affordable</span>
+              <h3 class="blog-title-card">Best CAPTCHA Solver API Under Budget for Startups: High Accuracy Without
+                Enterprise Pricing</h3>
+              <p class="blog-desc">
+                Best CAPTCHA Solver API under budget for startups delivers high accuracy, reliable performance, and
+                affordable pricing.
+              </p>
+              <div class="blog-footer">
+                <span class="blog-date">Nov 14, 2025</span>
+                <a href="#" class="blog-read">Read More</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="blog-card">
+            <img src="https://azapi.ai/wp-content/uploads/2025/11/best-captcha-solver-api-for-mobile-app-testing.webp">
+            <div class="blog-content">
+              <span class="blog-tag" style="background: var(--dark-soft)">Optimized</span>
+              <h3 class="blog-title-card">Best CAPTCHA Solver API for Mobile App Testing: Fast, Reliable, and
+                Cost-Effective Solutions</h3>
+              <p class="blog-desc">
+                Best CAPTCHA Solver API for Mobile App Testing delivers fast, reliable, and cost-effective CAPTCHA
+                solving for seamless automation.
+              </p>
+              <div class="blog-footer">
+                <span class="blog-date">Nov 10, 2025</span>
+                <a href="#" class="blog-read">Read More</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- offer section -->
+
+
+    <section class="trial-section">
+
+      <img class="bg-img"
+        src="https://img.freepik.com/free-vector/modern-flowing-orange-wave-banner-background_1035-19860.jpg?w=2000"
+        alt="Background">
+
+      <div class="trial-content">
+        <h1>Start Your Free Trial <span class="animate-text">Today!</span></h1>
+        <p>
+          Experience the full potential of AZAPI OCR and CAPTCHA services with the best captcha solver for fast,
+          accurate, and reliable results.
+        </p>
+
+        <button class="button-md" id="trialButton">Get Started</button>
+      </div>
+
+    </section>
+
+    <script>
+      const btn = document.getElementById("trialButton");
+
+      btn.addEventListener("click", function (e) {
+        const circle = document.createElement("span");
+        const size = Math.max(btn.clientWidth, btn.clientHeight);
+        circle.style.width = circle.style.height = size + "px";
+
+        const rect = btn.getBoundingClientRect();
+        circle.style.left = e.clientX - rect.left - size / 2 + "px";
+        circle.style.top = e.clientY - rect.top - size / 2 + "px";
+
+        circle.classList.add("ripple");
+        btn.appendChild(circle);
+
+        setTimeout(() => circle.remove(), 600);
+      });
+    </script>
+
+
+
+
+<!-- // foter -->
+
+  
+<footer>
+    <div class="footer-container">
+
+        <div class="footer-top">
+
+            <div class="footer-brand">
+                <div class="footer-brand-logo">
+                    <img src="https://azapi.ai/wp-content/themes/azapitheme/assets/img/azapi-logo.webp" alt="AZAPI Logo">
+                </div>
+
+                <p>AZAPI delivers advanced OCR and CAPTCHA solutions to boost verification accuracy and streamline document workflows.</p>
+
+                <a href="#" class="contact-btn">Get In Touch</a>
+
+                <div class="small-logos">
+                    <img src="https://azapi.ai/wp-content/themes/azapitheme/assets/img/lockfooter.webp" alt="Security Badge">
+                    <img src="https://azapi.ai/wp-content/themes/azapitheme/assets/img/acpm.webp" alt="ACPM Badge">
+                    <img src="https://azapi.ai/wp-content/themes/azapitheme/assets/img/iso.webp" alt="ISO Badge">
+                    <img src="https://azapi.ai/wp-content/themes/azapitheme/assets/img/iso2.webp" alt="ISO Badge">
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="links-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Demo</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Extension</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Terms and conditions</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Refunds</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Document APIs</h3>
+                <ul>
+                    <li><a href="#">Aadhaar OCR</a></li>
+                    <li><a href="#">PAN OCR</a></li>
+                    <li><a href="#">Voter Card OCR API</a></li>
+                    <li><a href="#">Driving Licence OCR</a></li>
+                    <li><a href="#">Passport OCR</a></li>
+                    <li><a href="#">Vehicle RC OCR API</a></li>
+                    <li><a href="#">E-Invoice OCR</a></li>
+                    <li><a href="#">Advanced E-Invoice OCR</a></li>
+                    <li><a href="#">Bill OCR</a></li>
+                    <li><a href="#">Invoice OCR API</a></li>
+                    <li><a href="#">Payment Receipt OCR API</a></li>
+                    <li><a href="#">Salary Slip OCR API</a></li>
+                    <li><a href="#">Bank Cheque OCR</a></li>
+                    <li><a href="#">Bank Passbook OCR</a></li>
+                    <li><a href="#">Bank Statement OCR</a></li>
+                    <li><a href="#">Bank Statement Analyzer</a></li>
+                    <li><a href="#">Certificate of Incorporation OCR</a></li>
+                    <li><a href="#">GST Certificate OCR</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-contact-social">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><i class="fa-regular fa-envelope"></i> info@azapi.ai</p>
+                <p><i class="fa-solid fa-phone"></i> +91-95998 09427</p>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © 2025, Azlogics Pvt. Ltd. All Rights Reserved.
+        </div>
+
+    </div>
+</footer>
+
+
+  </body>
+
+</html>
